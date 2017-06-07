@@ -40,7 +40,7 @@ class EventBus:
         """
 
         def outer(func):
-            if id(func) not in self._event_funcs_ids(event):
+            if func.__name__ not in self.event_func_names(event):
                 self._events[event].append(func)
 
             @wraps(func)
@@ -100,11 +100,11 @@ class EventBus:
     #   Private Methods
     # ------------------------------------------
 
-    def _event_funcs_ids(self, name: str) -> List[int]:
+    def event_func_names(self, name: str) -> List[int]:
         """ Returns unique ids of each function subscribed to an event.
 
         :param name: Name of the event.
         :type name: str
         :return:
         """
-        return [id(func) for func in self._events[name]]
+        return [func.__name__ for func in self._events[name]]
