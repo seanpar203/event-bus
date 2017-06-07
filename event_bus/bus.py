@@ -96,6 +96,7 @@ class EventBus:
                 returned = func(*args, **kwargs)
                 self.emit(event)
                 return returned
+
             return wrapper
 
         return outer
