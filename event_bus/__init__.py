@@ -61,21 +61,24 @@ class EventBus:
             func(*args, *kwargs)
 
     def emit_after(self, event: str) -> Callable:
-        """ Decorator that emits events after the function is completed.
+        """ Decorator that emits events after the function is completed. 
 
         :param event: The first parameter
         :type event: str
 
         :return: Callable
+        
+         :Note:
+            This plainly just calls functions without passing params into the
+            subscribed callables. This is great if you want to do some kind
+            of post processing without requiring information before doing so. 
         """
 
         def outer(func):
             @wraps(func)
             def wrapper(*args, **kwargs):
                 func(*args, *kwargs)
-
-                for fn in self.event_funcs(event):
-                    fn()
+                self.emit(event)
 
             return wrapper
 
