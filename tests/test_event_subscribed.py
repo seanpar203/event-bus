@@ -18,7 +18,8 @@ def test_event_subscription():
     # Convenience variables
     func_name = subscription.__name__
     event_func_names = bus.event_func_names(EVENT_NAME)
+    event_count = bus.subscribed_event_count()
 
     # Asserts
     assert func_name in event_func_names
-    assert len(event_func_names) == 1
+    assert event_count == 1
