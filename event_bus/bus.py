@@ -123,19 +123,7 @@ class EventBus:
         """
         return [func.__name__ for func in self._events[name]]
 
-    # ------------------------------------------
-    #   Private Methods
-    # ------------------------------------------
-
-    def _cls_name(self) -> str:
-        """ Convenience method to reduce verbosity.
-
-        :return: Name of class
-        :rtype: str
-        """
-        return self.__class__.__name__
-
-    def _subscribed_event_count(self) -> int:
+    def subscribed_event_count(self) -> int:
         """ Returns the total amount of subscribed events.
 
         :return: Integer amount events.
@@ -147,3 +135,15 @@ class EventBus:
             event_counter[key] = len(values)
 
         return sum(event_counter.values())
+
+    # ------------------------------------------
+    #   Private Methods
+    # ------------------------------------------
+
+    def _cls_name(self) -> str:
+        """ Convenience method to reduce verbosity.
+
+        :return: Name of class
+        :rtype: str
+        """
+        return self.__class__.__name__
