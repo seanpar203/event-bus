@@ -73,7 +73,7 @@ class EventBus:
         :type event: str
         """
         for func in self.event_funcs(event):
-            func(*args, *kwargs)
+            func(*args, **kwargs)
 
     def emit_after(self, event: str) -> Callable:
         """ Decorator that emits events after the function is completed.
@@ -93,7 +93,7 @@ class EventBus:
         def outer(func):
             @wraps(func)
             def wrapper(*args, **kwargs):
-                returned = func(*args, *kwargs)
+                returned = func(*args, **kwargs)
                 self.emit(event)
                 return returned
             return wrapper
