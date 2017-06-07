@@ -93,9 +93,9 @@ class EventBus:
         def outer(func):
             @wraps(func)
             def wrapper(*args, **kwargs):
-                func(*args, *kwargs)
+                returned = func(*args, *kwargs)
                 self.emit(event)
-
+                return returned
             return wrapper
 
         return outer
