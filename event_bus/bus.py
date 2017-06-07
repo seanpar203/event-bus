@@ -3,7 +3,7 @@
 
 from functools import wraps
 from collections import defaultdict
-from typing import Iterable, Callable, List
+from typing import Iterable, Callable, List, Dict
 
 
 class EventBus:
@@ -22,14 +22,15 @@ class EventBus:
     def __init__(self) -> None:
         """ Creates new EventBus object. """
 
-        self._events = defaultdict(list)
+        self._events = defaultdict(list)  # type: Dict[str, List[Callable]]
 
     def __str__(self) -> str:
         """ Returns string representation. """
         return "<{}>".format(self.__class__.__name__)
 
-    # ------------------------------------------
-    #   Public Methods
+        # ------------------------------------------
+
+    # Public Methods
     # ------------------------------------------
 
     def on(self, event: str) -> Callable:
@@ -100,11 +101,13 @@ class EventBus:
     #   Private Methods
     # ------------------------------------------
 
-    def event_func_names(self, name: str) -> List[int]:
+    def event_func_names(self, name: str) -> List[str]:
         """ Returns unique ids of each function subscribed to an event.
 
         :param name: Name of the event.
         :type name: str
-        :return:
+
+        :return: Names of functions subscribed to a specific event.
+        :rtype: list
         """
         return [func.__name__ for func in self._events[name]]
