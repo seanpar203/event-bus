@@ -1,8 +1,8 @@
 """ A simple event bus """
 
 from functools import wraps
-from collections import defaultdict
-from typing import Iterable, Callable, List, Dict
+from collections import defaultdict, Counter
+from typing import Iterable, Callable, List, Dict, Any
 
 
 class EventBus:
@@ -21,20 +21,51 @@ class EventBus:
     def __init__(self) -> None:
         """ Creates new EventBus object. """
 
-        self._events = defaultdict(list)  # type: Dict[str, List[Callable]]
+        self._events = defaultdict(list)  # type: Dict[Any, List[Callable]]
+
+    def __repr__(self) -> str:
+        """ Returns EventBus string representation.
+
+        :return: Instance with how many subscribed events.
+        """
+        return self.__str__()
 
     def __str__(self) -> str:
-        """ Returns string representation. """
+        """ Returns EventBus string representation.
 
-        return "<{}>".format(self.__class__.__name__)
+        :return: Instance with how many subscribed events.
+        """
 
-        # ------------------------------------------
+        count = self._amount_of_subscribed_events()
 
+        return "<{}: {} subscribed events.>".format(self._cls_name(), count)
+
+    # ------------------------------------------
     # Public Methods
     # ------------------------------------------
+    def _cls_name(self) -> str:
+        """ Convenience method for reduce verbosity.
+
+        :return: Name of class
+        :rtype: str
+        """
+        return self.__class__.__name__
+
+    def _amount_of_subscribed_events(self) -> int:
+        """ Returns the total amount of subscribed events.
+
+        :return: Integer amount events.
+        :rtype: int
+        """
+        event_counter = Counter()  # type: Dict[Any, int]
+
+        for key, values in self._events.items():
+            event_counter[key] = len(values)
+
+        return sum(event_counter.values())
 
     def on(self, event: str) -> Callable:
-        """ Creates a function(s) to be called when an event is emitted.
+        """ Decorator for subscribing a function to a specific event.
 
         :param event: Name of the event to subscribe to.
         :type event: str
