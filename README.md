@@ -29,7 +29,7 @@ def some_func():
 ```
 
 
-# Real world usage.
+# Real world usage
 Here are some examples on real world usage.
 
 ```python
@@ -68,4 +68,32 @@ def create_user():
 >>> create_user()
 'Sent welcome email to Ricky Bobby'
 'Sent temp pass email to Ricky Bobby'
+```
+
+# Emitting events after
+There is a decorator for emitting events after code completion.
+
+Note: This way doesnt allow the passing of args and kwargs into the events.
+
+Usage: This is great for functions that are standalone.
+
+```python
+from event_bus import EventBus
+
+bus = EventBus()
+
+
+@bus.on(event='update:ratings:avg')
+def update_avg_ratings():
+    # Update avg ratings in DB...
+    print("Finished updating ratings.")
+
+@bus.emit_after(event='update:ratings:avg')
+def add_rating():
+    # Creating a new rating...
+    print("Added new rating.")
+    
+>>> add_rating()
+"Added new rating."
+"Finished updating ratings."
 ```
