@@ -73,9 +73,9 @@ def create_user():
 # Emitting events after
 There is a decorator for emitting events after code completion.
 
-Note: This way doesnt allow the passing of args and kwargs into the events.
+This is great for functions that are standalone.
 
-Usage: This is great for functions that are standalone.
+**`Note: This way doesnt allow the passing of args and kwargs into the events.`**
 
 ```python
 from event_bus import EventBus
