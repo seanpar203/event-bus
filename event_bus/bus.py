@@ -36,7 +36,7 @@ class EventBus:
         :return: Instance with how many subscribed events.
         """
 
-        count = self._subscribed_event_count()
+        count = self.subscribed_event_count()
 
         return "<{}: {} subscribed events.>".format(self._cls_name(), count)
 
