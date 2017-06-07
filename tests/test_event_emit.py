@@ -10,6 +10,7 @@ EVENT_NAME = 'completed'
 
 @bus.on(event=EVENT_NAME)
 def subscription():
+    """ Subscribed event to run after event `completed` """
     global GLOBAL_VAR
     GLOBAL_VAR = 'Finished'
 

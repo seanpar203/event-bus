@@ -9,6 +9,7 @@ EVENT_NAME = 'hello_world'
 
 @bus.on(event=EVENT_NAME)
 def subscription():
+    """ Subscribed event to run after event `hello_world` """
     print("Hello World!")
 
 

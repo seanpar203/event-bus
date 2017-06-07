@@ -8,6 +8,7 @@ EVENT_NAME = 'completed'
 
 @bus.on(event=EVENT_NAME)
 def on_completed():
+    """ Subscribed event to run after event `completed` """
     return "It works!"
 
 
