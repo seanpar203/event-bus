@@ -26,6 +26,7 @@ class EventBus:
 
     def __str__(self) -> str:
         """ Returns string representation. """
+
         return "<{}>".format(self.__class__.__name__)
 
         # ------------------------------------------
@@ -38,6 +39,9 @@ class EventBus:
 
         :param event: Name of the event to subscribe to.
         :type event: str
+
+        :return: The outer function.
+        :rtype: Callable
         """
 
         def outer(func):
@@ -102,7 +106,7 @@ class EventBus:
     # ------------------------------------------
 
     def event_func_names(self, name: str) -> List[str]:
-        """ Returns unique ids of each function subscribed to an event.
+        """ Returns string name of each function subscribed to an event.
 
         :param name: Name of the event.
         :type name: str
