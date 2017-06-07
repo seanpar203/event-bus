@@ -26,6 +26,8 @@ local.properties
 .loadpath
 .recommenders
 
+.mypy_cache/
+
 # Eclipse Core
 .project
 
