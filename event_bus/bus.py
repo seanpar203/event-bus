@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 """ A simple event bus """
 
 from functools import wraps
@@ -81,7 +80,6 @@ class EventBus:
         """
 
         def outer(func):
-
             @wraps(func)
             def wrapper(*args, **kwargs):
                 func(*args, *kwargs)
