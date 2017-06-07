@@ -78,7 +78,7 @@ class EventBus:
     def emit_after(self, event: str) -> Callable:
         """ Decorator that emits events after the function is completed.
 
-        :param event: The first parameter
+        :param event: Name of the event.
         :type event: str
 
         :return: Callable
