@@ -76,10 +76,12 @@ class EventBus:
          :Note:
             This plainly just calls functions without passing params into the
             subscribed callables. This is great if you want to do some kind
-            of post processing without requiring information before doing so.
+            of post processing without the callable requiring information
+            before doing so.
         """
 
         def outer(func):
+
             @wraps(func)
             def wrapper(*args, **kwargs):
                 func(*args, *kwargs)
