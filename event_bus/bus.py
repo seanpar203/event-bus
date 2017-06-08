@@ -4,6 +4,8 @@ from functools import wraps
 from collections import defaultdict, Counter
 from typing import Iterable, Callable, List, Dict, Any, Set, Union
 
+from event_bus.exceptions import EventDoesntExist
+
 
 class EventBus:
     """ A simple event bus class. """
@@ -97,7 +99,8 @@ class EventBus:
         for func in self.event_funcs(event):
             func(*args, **kwargs)
 
-    def emit_only(self, event: str, func_names: Union[str, List[str]], *args, **kwargs) -> None:
+    def emit_only(self, event: str, func_names: Union[str, List[str]], *args,
+                  **kwargs) -> None:
         """ Specifically only emits certain subscribed events.
 
 
@@ -163,7 +166,7 @@ class EventBus:
         """
         return [func.__name__ for func in self._events[event]]
 
-    def remove_subscriber(self, event: str, func_name: str) -> None:
+    def remove_event(self, event: str, func_name: str) -> None:
         """ Removes a subscribed function from a specific event.
 
         :param event: The name of the event.
@@ -180,7 +183,11 @@ class EventBus:
             if func.__name__ == func_name:
                 event_funcs_copy.remove(func)
 
-        self._events[event] = event_funcs_copy
+        if self._events[event] == event_funcs_copy:
+            err_msg = "function {} doesn't exist inside {} events."
+            raise EventDoesntExist(err_msg)
+        else:
+            self._events[event] = event_funcs_copy
 
     # ------------------------------------------
     # Private methods.
