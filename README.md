@@ -7,9 +7,11 @@ A way to trigger multiple subsequent functions.
 
 
 # Design choices
-In a lot of methods I require passing in a string for the `func_name` parameter.
+In some of the methods I require passing in a string for the `func_name` parameter.
  
 I decided to do this to *not* require users to import the subscribed events into the file.
+
+In that case it would've been better to just call the functions if they're already imported.
 
 
 # Usage
