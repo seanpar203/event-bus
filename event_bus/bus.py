@@ -141,28 +141,28 @@ class EventBus:
 
         return outer
 
-    def event_funcs(self, name: str) -> Iterable[Callable]:
+    def event_funcs(self, event: str) -> Iterable[Callable]:
         """ Returns an Iterable of the functions subscribed to a event.
 
-        :param name: Name of the event.
-        :type name: str
+        :param event: Name of the event.
+        :type event: str
 
         :return: A iterable to do things with.
         :rtype: Iterable
         """
-        for func in self._events[name]:
+        for func in self._events[event]:
             yield func
 
-    def event_func_names(self, name: str) -> List[str]:
+    def event_func_names(self, event: str) -> List[str]:
         """ Returns string name of each function subscribed to an event.
 
-        :param name: Name of the event.
-        :type name: str
+        :param event: Name of the event.
+        :type event: str
 
         :return: Names of functions subscribed to a specific event.
         :rtype: list
         """
-        return [func.__name__ for func in self._events[name]]
+        return [func.__name__ for func in self._events[event]]
 
     def remove_subscriber(self, event: str, func_name: str) -> None:
         """ Removes a subscribed function from a specific event.
