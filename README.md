@@ -136,3 +136,33 @@ def some_func():
 >>> print(GLOBAL_VAR)
 'it works!'
 ```
+
+# Removing subscribed events.
+For some reason you might want to completely remove a subscribed event.
+
+This can be achieved with method `removed_subscriber(event: str, func_name: str)`
+
+```python
+from event_bus import EventBus
+
+# Constants.
+bus = EventBus()
+EVENT_NAME = 'event'
+
+
+@bus.on(event=EVENT_NAME)
+def event_one():
+    """ Mock event. """
+    pass
+
+
+def some_func():
+    bus.remove_subscriber(event=EVENT_NAME, func_name='event_one')
+    
+
+>>> bus.event_count
+1
+>>> some_func()
+>>> bus.event_count
+0
+```
