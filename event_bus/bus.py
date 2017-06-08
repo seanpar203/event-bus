@@ -41,9 +41,9 @@ class EventBus:
 
         return "{}".format(self.cls_name)
 
-    # ==============================
-    #  Properties
-    # ==============================
+    # ------------------------------------------
+    # Properties
+    # ------------------------------------------
 
     @property
     def event_count(self) -> int:
@@ -97,7 +97,8 @@ class EventBus:
         for func in self.event_funcs(event):
             func(*args, **kwargs)
 
-    def emit_only(self, event: str, func_names: Union[str, List[str]], *args, **kwargs) -> None:
+    def emit_only(self, event: str, func_names: Union[str, List[str]], *args,
+                  **kwargs) -> None:
         """ Specifically only emits certain subscribed events.
 
 
@@ -163,19 +164,6 @@ class EventBus:
         """
         return [func.__name__ for func in self._events[name]]
 
-    def subscribed_event_count(self) -> int:
-        """ Returns the total amount of subscribed events.
-
-        :return: Integer amount events.
-        :rtype: int
-        """
-        event_counter = Counter()  # type: Dict[Any, int]
-
-        for key, values in self._events.items():
-            event_counter[key] = len(values)
-
-        return sum(event_counter.values())
-
     def remove_subscriber(self, event: str, func_name: str) -> None:
         """ Removes a subscribed function from a specific event.
 
@@ -194,3 +182,20 @@ class EventBus:
                 event_funcs_copy.remove(func)
 
         self._events[event] = event_funcs_copy
+
+    # ------------------------------------------
+    # Private methods.
+    # ------------------------------------------
+
+    def _subscribed_event_count(self) -> int:
+        """ Returns the total amount of subscribed events.
+
+        :return: Integer amount events.
+        :rtype: int
+        """
+        event_counter = Counter()  # type: Dict[Any, int]
+
+        for key, values in self._events.items():
+            event_counter[key] = len(values)
+
+        return sum(event_counter.values())
