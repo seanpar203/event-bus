@@ -97,8 +97,7 @@ class EventBus:
         for func in self.event_funcs(event):
             func(*args, **kwargs)
 
-    def emit_only(self, event: str, func_names: Union[str, List[str]], *args,
-                  **kwargs) -> None:
+    def emit_only(self, event: str, func_names: Union[str, List[str]], *args, **kwargs) -> None:
         """ Specifically only emits certain subscribed events.
 
 

@@ -97,3 +97,42 @@ def add_rating():
 "Added new rating."
 "Finished updating ratings."
 ```
+
+# Emitting specific events
+There might be times when you don't want to emit all the functions that are subscribed to an event.
+
+
+The `emit_only(event: str, func_names: Union[str, List[str]], *args, **kwargs)` method allows this.
+ 
+The code below is an example.
+```python
+from event_bus import EventBus
+
+# Constsnts
+bus = EventBus()
+EVENT_NAME = 'event'
+GLOBAL_VAR = 'var_1'
+
+
+# Lets create 2 events subscribed to the same event.
+# The last event is the control and shouldn't run with emit_only
+
+@bus.on(event=EVENT_NAME)
+def event_one(param):
+    global GLOBAL_VAR
+    GLOBAL_VAR = param
+
+
+@bus.on(event=EVENT_NAME)
+def event_two(param):
+    global GLOBAL_VAR
+    GLOBAL_VAR = param
+
+
+def some_func():
+    bus.emit_only(EVENT_NAME, 'event_one', 'it works!')
+
+>>> some_func()    
+>>> print(GLOBAL_VAR)
+'it works!'
+```
