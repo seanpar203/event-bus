@@ -28,7 +28,7 @@ class EventBus:
 
         :return: Instance with how many subscribed events.
         """
-        return self.__str__()
+        return "<{}: {}>".format(self._cls_name(), self.event_count)
 
     def __str__(self) -> str:
         """ Returns EventBus string representation.
@@ -36,9 +36,20 @@ class EventBus:
         :return: Instance with how many subscribed events.
         """
 
-        count = self.subscribed_event_count()
+        return "{} subscribed events".format(self.event_count)
 
-        return "<{}: {} subscribed events.>".format(self._cls_name(), count)
+    # ==============================
+    #  Properties.
+    # ==============================
+
+    @property
+    def event_count(self) -> int:
+        """ Sugar for returning total subscribed events.
+
+        :return: Total amount of subscribed events.
+        :rtype: int
+        """
+        return self.subscribed_event_count()
 
     # ------------------------------------------
     # Public Methods
