@@ -174,11 +174,6 @@ def some_func():
         print("Removed event.")
     
 
-
-# This is how you
-def another_func():
-    
-
 >>> bus.event_count
 1
 >>> some_func()
