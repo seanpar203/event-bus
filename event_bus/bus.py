@@ -157,12 +157,6 @@ class EventBus:
     def remove_subscriber(self, event: str, func_name: str) -> None:
         """ Removes a subscribed function from a specific event.
 
-
-        .. notes:
-            I chose not to propagate exceptions because the reason to use
-            this method was to remove a function so if the function already
-            doesn't exist then who cares...?
-
         :param event: The name of the event.
         :type event: str
 
