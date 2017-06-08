@@ -140,7 +140,7 @@ def some_func():
 # Removing subscribed events.
 For some reason you might want to completely remove a subscribed event.
 
-This can be achieved with method `removed_subscriber(event: str, func_name: str)`
+This can be achieved with the method `remove_subscriber(event: str, func_name: str)`
 
 ```python
 from event_bus import EventBus
