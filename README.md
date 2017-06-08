@@ -6,6 +6,11 @@ A simple `Python 3.5+` event bus.
 A way to trigger multiple subsequent functions.
 
 
+# Design choices
+In a lot of methods I require passing in a string for the `func_name` parameter. 
+I decided to this to *not* require users to import the subscribed events into the file.
+
+
 # Usage
 The EventBus is meant to be a singleton used throughout an application.
 
