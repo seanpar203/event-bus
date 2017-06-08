@@ -52,7 +52,7 @@ class EventBus:
         :return: Total amount of subscribed events.
         :rtype: int
         """
-        return self.subscribed_event_count()
+        return self._subscribed_event_count()
 
     @property
     def cls_name(self) -> str:
