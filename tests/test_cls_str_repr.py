@@ -19,5 +19,5 @@ def test_event_bus_str_repr():
     bus_str = str(bus)
     bus_repr = repr(bus)
 
-    assert bus_str == "<EventBus: 1 subscribed events.>"
-    assert bus_repr == "<EventBus: 1 subscribed events.>"
+    assert bus_str == "EventBus"
+    assert bus_repr == "<EventBus: 1 subscribed events>"

@@ -28,7 +28,10 @@ class EventBus:
 
         :return: Instance with how many subscribed events.
         """
-        return "<{}: {}>".format(self._cls_name(), self.event_count)
+        return "<{}: {} subscribed events>".format(
+            self._cls_name(),
+            self.event_count
+        )
 
     def __str__(self) -> str:
         """ Returns EventBus string representation.
@@ -36,7 +39,7 @@ class EventBus:
         :return: Instance with how many subscribed events.
         """
 
-        return "{} subscribed events".format(self.event_count)
+        return "{}".format(self._cls_name())
 
     # ==============================
     #  Properties.
