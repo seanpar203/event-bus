@@ -7,8 +7,9 @@ A way to trigger multiple subsequent functions.
 
 
 # Design choices
-In a lot of methods I require passing in a string for the `func_name` parameter. 
-I decided to this to *not* require users to import the subscribed events into the file.
+In a lot of methods I require passing in a string for the `func_name` parameter.
+ 
+I decided to do this to *not* require users to import the subscribed events into the file.
 
 
 # Usage
@@ -145,11 +146,13 @@ def some_func():
 # Removing subscribed events.
 For some reason you might want to completely remove a subscribed event.
 
-This can be achieved with the method `remove_subscriber(event: str, func_name: str)`
+This can be achieved with the method `remove_event(event: str, func_name: str)`
+
+**Note: This can also raise a `EventDoestExist` exception.**
 
 ```python
 from event_bus import EventBus
-
+from event_bus.exceptions import EventDoesntExist
 # Constants.
 bus = EventBus()
 EVENT_NAME = 'event'
@@ -162,12 +165,24 @@ def event_one():
 
 
 def some_func():
-    bus.remove_subscriber(event=EVENT_NAME, func_name='event_one')
+    try:
+        bus.remove_event(event=EVENT_NAME, func_name='event_one')
+    except EventDoesntExist:
+        # Handle error here..
+        pass
+    else:
+        print("Removed event.")
+    
+
+
+# This is how you
+def another_func():
     
 
 >>> bus.event_count
 1
 >>> some_func()
+"Removed event."
 >>> bus.event_count
 0
 ```
