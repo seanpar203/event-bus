@@ -29,7 +29,7 @@ class EventBus:
         :return: Instance with how many subscribed events.
         """
         return "<{}: {} subscribed events>".format(
-            self._cls_name(),
+            self.cls_name,
             self.event_count
         )
 
@@ -39,10 +39,10 @@ class EventBus:
         :return: Instance with how many subscribed events.
         """
 
-        return "{}".format(self._cls_name())
+        return "{}".format(self.cls_name)
 
     # ==============================
-    #  Properties.
+    #  Properties
     # ==============================
 
     @property
@@ -53,6 +53,15 @@ class EventBus:
         :rtype: int
         """
         return self.subscribed_event_count()
+
+    @property
+    def cls_name(self) -> str:
+        """ Convenience method to reduce verbosity.
+
+        :return: Name of class
+        :rtype: str
+        """
+        return self.__class__.__name__
 
     # ------------------------------------------
     # Public Methods
@@ -186,15 +195,3 @@ class EventBus:
                 event_funcs_copy.remove(func)
 
         self._events[event] = event_funcs_copy
-
-    # ------------------------------------------
-    #   Private Methods
-    # ------------------------------------------
-
-    def _cls_name(self) -> str:
-        """ Convenience method to reduce verbosity.
-
-        :return: Name of class
-        :rtype: str
-        """
-        return self.__class__.__name__
