@@ -25,6 +25,8 @@ print(
     "The testing below tests the code under 3 different circumstances."
     "\n"
 )
+
+
 # ------------------------------------------
 # Single Threaded Code Execution.
 # ------------------------------------------
@@ -35,7 +37,7 @@ start = time()
 bus.emit(EVENT_NAME, 30)
 
 finish = time() - start
-print("{} ran the code in {}".format(TEST_TYPE, finish))
+print("{} ran the code in {} seconds.".format(TEST_TYPE, finish))
 
 # ------------------------------------------
 # Multi-Threaded Code Execution.
@@ -49,7 +51,7 @@ for func in events:
     func.start()
 
 finish = time() - start
-print("{} ran the code in {}".format(TEST_TYPE, finish))
+print("{} ran the code in {} seconds.".format(TEST_TYPE, finish))
 
 # ------------------------------------------
 # Multi-process Code Execution.
@@ -63,4 +65,4 @@ for func in events:
     func.start()
 
 finish = time() - start
-print("{} ran the code in {}".format(TEST_TYPE, finish))
+print("{} ran the code in {} seconds.".format(TEST_TYPE, finish))
