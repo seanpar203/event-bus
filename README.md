@@ -160,7 +160,7 @@ For some reason you might want to completely remove a subscribed event.
 
 This can be achieved with the method `remove_event(event: str, func_name: str)`
 
-**Note: This can also raise a `EventDoestExist` exception.**
+**Note: This can also raise a `EventDoesntExist` exception.**
 
 ```python
 from event_bus import EventBus
