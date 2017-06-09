@@ -5,6 +5,16 @@ A simple `Python 3.5+` event bus.
 # Purpose
 A way to trigger multiple subsequent functions.
 
+# TODO
+Make tasks run using `Threads`
+
+Results from different performance tests:
+
+![](https://github.com/seanpar203/event-bus/blob/master/performance_tests.png)
+
+`Threads` have the best overall improvement in all domains. I plan on integrating
+Threads under the hood to execute subsequent tasks faster.
+
 
 # Design choices
 In some of the methods I require passing in a string for the `func_name` parameter.
