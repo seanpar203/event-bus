@@ -184,7 +184,7 @@ class EventBus:
                 event_funcs_copy.remove(func)
 
         if self._events[event] == event_funcs_copy:
-            err_msg = "function {} doesn't exist inside {} events."
+            err_msg = "function doesn't exist inside event {} ".format(event)
             raise EventDoesntExist(err_msg)
         else:
             self._events[event] = event_funcs_copy
