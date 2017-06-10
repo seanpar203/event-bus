@@ -1,5 +1,6 @@
 # Event Bus
-![https://travis-ci.org/seanpar203/event-bus](https://travis-ci.org/seanpar203/event-bus.svg?branch=master)
+<a href="https://travis-ci.org/seanpar203/event-bus"><img src="https://travis-ci.org/seanpar203/event-bus.svg?branch=master" alt="Build Status"></a>
+
 
 A simple `Python 3.5+` event bus.
 
