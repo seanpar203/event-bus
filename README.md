@@ -1,4 +1,6 @@
 # Event Bus
+![](https://travis-ci.org/seanpar203/event-bus.svg?branch=master)
+
 A simple `Python 3.5+` event bus.
 
 
