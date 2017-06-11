@@ -1,6 +1,7 @@
 """ A simple event bus """
 
 from functools import wraps
+from threading import Thread
 from collections import defaultdict, Counter
 from typing import Iterable, Callable, List, Dict, Any, Set, Union
 
@@ -95,9 +96,27 @@ class EventBus:
 
         :param event: Name of the event.
         :type event: str
+        
+        .. notes:
+            Passing in threads=True as a kwarg allows to run emitted events
+            as separate threads. This can significantly speed up code execution
+            depending on the code being executed.
         """
-        for func in self.event_funcs(event):
-            func(*args, **kwargs)
+        threads = kwargs.pop('threads', None)
+
+        if threads:
+
+            events = [
+                Thread(target=f, args=args, kwargs=kwargs) for f in
+                self.event_funcs(event)
+            ]
+
+            for event in events:
+                event.start()
+
+        else:
+            for func in self.event_funcs(event):
+                func(*args, **kwargs)
 
     def emit_only(self, event: str, func_names: Union[str, List[str]], *args,
                   **kwargs) -> None:
