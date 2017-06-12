@@ -124,27 +124,22 @@ The `emit_only(event: str, func_names: Union[str, List[str]], *args, **kwargs)` 
  
 The code below is an example.
 ```python
-EVENT_NAME = 'event'
 GLOBAL_VAR = 'var_1'
 
-
-# Lets create 2 events subscribed to the same event.
-# The last event is the control and shouldn't run with emit_only
-
-@bus.on(EVENT_NAME)
+@bus.on('event')
 def event_one(param):
     global GLOBAL_VAR
     GLOBAL_VAR = param
 
 
-@bus.on(EVENT_NAME)
+@bus.on('event')
 def event_two(param):
     global GLOBAL_VAR
     GLOBAL_VAR = param
 
 
 def some_func():
-    bus.emit_only(EVENT_NAME, 'event_one', 'it works!')
+    bus.emit_only('event', 'event_one', 'it works!')
 
 >>> some_func()
 >>> print(GLOBAL_VAR)
