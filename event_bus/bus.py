@@ -96,7 +96,7 @@ class EventBus:
 
         :param event: Name of the event.
         :type event: str
-        
+
         .. notes:
             Passing in threads=True as a kwarg allows to run emitted events
             as separate threads. This can significantly speed up code execution
@@ -185,16 +185,16 @@ class EventBus:
         """
         return [func.__name__ for func in self._events[event]]
 
-    def remove_event(self, event: str, func_name: str) -> None:
+    def remove_event(self, func_name: str, event: str) -> None:
         """ Removes a subscribed function from a specific event.
-
-        :param event: The name of the event.
-        :type event: str
 
         :param func_name: The name of the function to be removed.
         :type func_name: str
 
-        :return:
+        :param event: The name of the event.
+        :type event: str
+
+        :raise EventDoesntExist if there func_name doesn't exist in event.
         """
         event_funcs_copy = self._events[event].copy()
 
