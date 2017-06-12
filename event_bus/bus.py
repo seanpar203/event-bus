@@ -81,7 +81,7 @@ class EventBus:
         """
 
         def outer(func):
-            self._events[event].add(func)
+            self.add_event(func, event)
 
             @wraps(func)
             def wrapper(*args, **kwargs):
