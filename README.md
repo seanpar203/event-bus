@@ -44,7 +44,7 @@ Below are some metrics under 3 different scenarios:
 ![](https://github.com/seanpar203/event-bus/blob/master/performance_tests.png)
 
 Because of the results of the tests I decided to add `threading` to the library.
-passing `threading=True` in the `emit(event, *args, **kwargs)` method will run
+passing `threads=True` in the `emit(event, *args, **kwargs)` method will run
 the code using multi-threading, this can significantly speed up the events.
 
 
