@@ -8,15 +8,44 @@ A simple `Python 3.5+` event bus.
 # Purpose
 A way to trigger multiple subsequent functions.
 
-# TODO
-Make tasks run using `Threads`
 
-Results from different performance tests:
+# Usage
+The EventBus is meant to be a singleton used throughout an application.
+
+```python
+from event_bus import EventBus
+
+bus = EventBus()
+
+@bus.on('hello')
+def subscribed_event():
+    print('World!')
+
+def some_func():
+	print('Hello')
+	bus.emit('hello')
+
+>>> some_func()
+"Hello"
+"World!"
+```
+
+# Performance.
+After building the library I started to think about performance and created tests
+for multiple scenarios. You can learn exactly what each test is doing by looking
+at the `performance_testing.py` file inside the `tests/` directory.
+
+Below are some metrics under 3 different scenarios:
+
+* CPU Heavy(Fibonacci sequence.)
+* IO Heavy(30 File reads, loading json.)
+* Network Heavy(100 GET requests to a website.)
 
 ![](https://github.com/seanpar203/event-bus/blob/master/performance_tests.png)
 
-`Threads` have the best overall improvement in all domains. I plan on integrating
-Threads under the hood to execute subsequent tasks faster.
+Because of the results of the tests I decided to add `threading` to the library.
+passing `threading=True` in the `emit(event, *args, **kwargs)` method will run
+the code using multi-threading, this can significantly speed up the events.
 
 
 # Design choices
@@ -27,37 +56,10 @@ I decided to do this to *not* require users to import the subscribed events into
 In that case it would've been better to just call the functions if they're already imported.
 
 
-# Usage
-The EventBus is meant to be a singleton used throughout an application.
-
-```python
-from event_bus import EventBus
-
-bus = EventBus() 
-
-
-@bus.on(event='hello')
-def subscribed_event():
-    print('Hello World')
-
-
-def some_func():
-    # Some real application logic would go here.
-    bus.emit(event='hello')
-
->>> some_func()
-'Hello World'
-```
-
-
 # Real world usage
 Here are some examples on real world usage.
 
 ```python
-from event_bus import EventBus
-
-bus = EventBus()
-
 # Mock Database. 
 USERS = {
     1: {
@@ -67,19 +69,19 @@ USERS = {
  }
 
 
-@bus.on(event='new:user')
+@bus.on('new:user')
 def send_welcome_email(user_id):
      user = USERS.get(user_id)
-     
+
      # Logic for sending email...
      print('Sent welcome email to {}'.format(user['name']))
 
-@bus.on(event='new:user')
+@bus.on('new:user')
 def send_temporary_pass(user_id):
     user = USERS.get(user_id)
     
     # Logic for sending temp pass email...
-    print('Sent temp pass email to {}'.format(user['name']))         
+    print('Sent temp pass email to {}'.format(user['name']))
 
 def create_user():
     # Logic for creating a user...
@@ -99,17 +101,12 @@ This is great for functions that are standalone.
 **`Note: This way doesnt allow the passing of args and kwargs into the events.`**
 
 ```python
-from event_bus import EventBus
-
-bus = EventBus()
-
-
-@bus.on(event='update:ratings:avg')
+@bus.on('update:ratings:avg')
 def update_avg_ratings():
     # Update avg ratings in DB...
     print("Finished updating ratings.")
 
-@bus.emit_after(event='update:ratings:avg')
+@bus.emit_after('update:ratings:avg')
 def add_rating():
     # Creating a new rating...
     print("Added new rating.")
@@ -127,10 +124,6 @@ The `emit_only(event: str, func_names: Union[str, List[str]], *args, **kwargs)` 
  
 The code below is an example.
 ```python
-from event_bus import EventBus
-
-# Constsnts
-bus = EventBus()
 EVENT_NAME = 'event'
 GLOBAL_VAR = 'var_1'
 
@@ -138,13 +131,13 @@ GLOBAL_VAR = 'var_1'
 # Lets create 2 events subscribed to the same event.
 # The last event is the control and shouldn't run with emit_only
 
-@bus.on(event=EVENT_NAME)
+@bus.on(EVENT_NAME)
 def event_one(param):
     global GLOBAL_VAR
     GLOBAL_VAR = param
 
 
-@bus.on(event=EVENT_NAME)
+@bus.on(EVENT_NAME)
 def event_two(param):
     global GLOBAL_VAR
     GLOBAL_VAR = param
@@ -153,7 +146,7 @@ def event_two(param):
 def some_func():
     bus.emit_only(EVENT_NAME, 'event_one', 'it works!')
 
->>> some_func()    
+>>> some_func()
 >>> print(GLOBAL_VAR)
 'it works!'
 ```
@@ -166,28 +159,21 @@ This can be achieved with the method `remove_event(event: str, func_name: str)`
 **Note: This can also raise a `EventDoesntExist` exception.**
 
 ```python
-from event_bus import EventBus
 from event_bus.exceptions import EventDoesntExist
-# Constants.
-bus = EventBus()
-EVENT_NAME = 'event'
 
-
-@bus.on(event=EVENT_NAME)
+@bus.on('event')
 def event_one():
     """ Mock event. """
     pass
 
-
 def some_func():
     try:
-        bus.remove_event(event=EVENT_NAME, func_name='event_one')
+        bus.remove_event('event', 'event_one')
     except EventDoesntExist:
         # Handle error here..
         pass
     else:
         print("Removed event.")
-    
 
 >>> bus.event_count
 1
