@@ -22,8 +22,8 @@ def subscribed_event():
     print('World!')
 
 def some_func():
-	print('Hello')
-	bus.emit('hello')
+    print('Hello')
+    bus.emit('hello')
 
 >>> some_func()
 "Hello"
@@ -161,14 +161,13 @@ This can be achieved with the method `remove_event(event: str, func_name: str)`
 ```python
 from event_bus.exceptions import EventDoesntExist
 
-@bus.on('event')
+@bus.on('fake_event')
 def event_one():
-    """ Mock event. """
     pass
 
 def some_func():
     try:
-        bus.remove_event('event', 'event_one')
+        bus.remove_event('fake_event', 'event_one')
     except EventDoesntExist:
         # Handle error here..
         pass
