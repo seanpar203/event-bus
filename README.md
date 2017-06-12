@@ -162,7 +162,7 @@ def event_one():
 
 def some_func():
     try:
-        bus.remove_event('fake_event', 'event_one')
+        bus.remove_event('event_one', 'fake_event')
     except EventDoesntExist:
         # Handle error here..
         pass
