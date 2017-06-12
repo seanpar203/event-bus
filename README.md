@@ -135,7 +135,7 @@ def event_one(param):
 @bus.on('event')
 def event_two(param):
     global GLOBAL_VAR
-    GLOBAL_VAR = param
+    GLOBAL_VAR = "I don't get called."
 
 
 def some_func():
