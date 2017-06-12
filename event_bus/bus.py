@@ -91,6 +91,17 @@ class EventBus:
 
         return outer
 
+    def add_event(self, func: Callable, event: str) -> None:
+        """ Adds a function to a event.
+
+        :param func: The function to call when event is emitted
+        :type func: Callable
+
+        :param event: Name of the event.
+        :type event: str
+        """
+        self._events[event].add(func)
+
     def emit(self, event: str, *args, **kwargs) -> None:
         """ Emit an event and run the subscribed functions.
 
@@ -108,20 +119,19 @@ class EventBus:
 
             events = [
                 Thread(target=f, args=args, kwargs=kwargs) for f in
-                self.event_funcs(event)
+                self._event_funcs(event)
             ]
 
             for event in events:
                 event.start()
 
         else:
-            for func in self.event_funcs(event):
+            for func in self._event_funcs(event):
                 func(*args, **kwargs)
 
     def emit_only(self, event: str, func_names: Union[str, List[str]], *args,
                   **kwargs) -> None:
         """ Specifically only emits certain subscribed events.
-
 
         :param event: Name of the event.
         :type event: str
@@ -132,7 +142,7 @@ class EventBus:
         if isinstance(func_names, str):
             func_names = [func_names]
 
-        for func in self.event_funcs(event):
+        for func in self._event_funcs(event):
             if func.__name__ in func_names:
                 func(*args, **kwargs)
 
@@ -162,29 +172,6 @@ class EventBus:
 
         return outer
 
-    def event_funcs(self, event: str) -> Iterable[Callable]:
-        """ Returns an Iterable of the functions subscribed to a event.
-
-        :param event: Name of the event.
-        :type event: str
-
-        :return: A iterable to do things with.
-        :rtype: Iterable
-        """
-        for func in self._events[event]:
-            yield func
-
-    def event_func_names(self, event: str) -> List[str]:
-        """ Returns string name of each function subscribed to an event.
-
-        :param event: Name of the event.
-        :type event: str
-
-        :return: Names of functions subscribed to a specific event.
-        :rtype: list
-        """
-        return [func.__name__ for func in self._events[event]]
-
     def remove_event(self, func_name: str, event: str) -> None:
         """ Removes a subscribed function from a specific event.
 
@@ -198,7 +185,7 @@ class EventBus:
         """
         event_funcs_copy = self._events[event].copy()
 
-        for func in self.event_funcs(event):
+        for func in self._event_funcs(event):
             if func.__name__ == func_name:
                 event_funcs_copy.remove(func)
 
@@ -211,6 +198,29 @@ class EventBus:
     # ------------------------------------------
     # Private methods.
     # ------------------------------------------
+
+    def _event_funcs(self, event: str) -> Iterable[Callable]:
+        """ Returns an Iterable of the functions subscribed to a event.
+
+        :param event: Name of the event.
+        :type event: str
+
+        :return: A iterable to do things with.
+        :rtype: Iterable
+        """
+        for func in self._events[event]:
+            yield func
+
+    def _event_func_names(self, event: str) -> List[str]:
+        """ Returns string name of each function subscribed to an event.
+
+        :param event: Name of the event.
+        :type event: str
+
+        :return: Names of functions subscribed to a specific event.
+        :rtype: list
+        """
+        return [func.__name__ for func in self._events[event]]
 
     def _subscribed_event_count(self) -> int:
         """ Returns the total amount of subscribed events.

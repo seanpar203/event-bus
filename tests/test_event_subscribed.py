@@ -16,10 +16,5 @@ def subscription():
 def test_event_subscription():
     """ Tests that a function is subscribed to an event. """
 
-    # Convenience variables
-    func_name = subscription.__name__
-    event_func_names = bus.event_func_names(EVENT_NAME)
-
     # Asserts
-    assert func_name in event_func_names
     assert bus.event_count == 1
