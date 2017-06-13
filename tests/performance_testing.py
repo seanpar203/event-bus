@@ -3,7 +3,7 @@
 import json
 import requests
 from os import getcwd
-from time import time
+from timeit import default_timer as timer
 from threading import Thread
 from multiprocessing import Process
 
@@ -47,11 +47,11 @@ create_event_one()
 # ------------------------------------------
 TEST_TYPE = 'Single-threaded'
 
-start = time()
+start = timer()
 
 bus.emit(EVENT_ONE, 30)
 
-finish = time() - start
+finish = timer() - start
 print("{} ran the code in {} seconds.".format(TEST_TYPE, finish))
 
 # ------------------------------------------
@@ -59,13 +59,13 @@ print("{} ran the code in {} seconds.".format(TEST_TYPE, finish))
 # ------------------------------------------
 TEST_TYPE = 'Multi-threaded'
 
-start = time()
+start = timer()
 
 events = [Thread(target=func, args=[30]) for func in bus._events[EVENT_ONE]]
 for func in events:
     func.start()
 
-finish = time() - start
+finish = timer() - start
 print("{} ran the code in {} seconds.".format(TEST_TYPE, finish))
 
 # ------------------------------------------
@@ -73,13 +73,13 @@ print("{} ran the code in {} seconds.".format(TEST_TYPE, finish))
 # ------------------------------------------
 TEST_TYPE = 'Multi-process'
 
-start = time()
+start = timer()
 
 events = [Process(target=func, args=[30]) for func in bus._events[EVENT_ONE]]
 for func in events:
     func.start()
 
-finish = time() - start
+finish = timer() - start
 print("{} ran the code in {} seconds.".format(TEST_TYPE, finish))
 
 
@@ -109,11 +109,11 @@ create_event_two()
 # ------------------------------------------
 TEST_TYPE = 'Single-threaded'
 
-start = time()
+start = timer()
 
 bus.emit(EVENT_TWO)
 
-finish = time() - start
+finish = timer() - start
 print("{} ran the code in {} seconds.".format(TEST_TYPE, finish))
 
 # ------------------------------------------
@@ -121,13 +121,13 @@ print("{} ran the code in {} seconds.".format(TEST_TYPE, finish))
 # ------------------------------------------
 TEST_TYPE = 'Multi-threaded'
 
-start = time()
+start = timer()
 
 events = [Thread(target=func) for func in bus._events[EVENT_TWO]]
 for func in events:
     func.start()
 
-finish = time() - start
+finish = timer() - start
 print("{} ran the code in {} seconds.".format(TEST_TYPE, finish))
 
 # ------------------------------------------
@@ -135,13 +135,13 @@ print("{} ran the code in {} seconds.".format(TEST_TYPE, finish))
 # ------------------------------------------
 TEST_TYPE = 'Multi-process'
 
-start = time()
+start = timer()
 
 events = [Process(target=func) for func in bus._events[EVENT_TWO]]
 for func in events:
     func.start()
 
-finish = time() - start
+finish = timer() - start
 print("{} ran the code in {} seconds.".format(TEST_TYPE, finish))
 
 
@@ -171,11 +171,11 @@ create_event_three()
 # ------------------------------------------
 TEST_TYPE = 'Single-threaded'
 
-start = time()
+start = timer()
 
 bus.emit(EVENT_THREE)
 
-finish = time() - start
+finish = timer() - start
 print("{} ran the code in {} seconds.".format(TEST_TYPE, finish))
 
 # ------------------------------------------
@@ -183,13 +183,13 @@ print("{} ran the code in {} seconds.".format(TEST_TYPE, finish))
 # ------------------------------------------
 TEST_TYPE = 'Multi-threaded'
 
-start = time()
+start = timer()
 
 events = [Thread(target=func) for func in bus._events[EVENT_THREE]]
 for func in events:
     func.start()
 
-finish = time() - start
+finish = timer() - start
 print("{} ran the code in {} seconds.".format(TEST_TYPE, finish))
 
 # ------------------------------------------
@@ -197,12 +197,12 @@ print("{} ran the code in {} seconds.".format(TEST_TYPE, finish))
 # ------------------------------------------
 TEST_TYPE = 'Multi-process'
 
-start = time()
+start = timer()
 
 events = [Process(target=func) for func in bus._events[EVENT_THREE]]
 for func in events:
     func.start()
 
-finish = time() - start
+finish = timer() - start
 
 print("{} ran the code in {} seconds.".format(TEST_TYPE, finish))
