@@ -93,7 +93,7 @@ def create_event_two():
     for i in range(30):
         @bus.on(event=EVENT_TWO)
         def read_file():
-            with open('{}/tests/generated.json'.format(getcwd())) as f:
+            with open('{}/generated.json'.format(getcwd())) as f:
                 data = json.load(f)
 
 
