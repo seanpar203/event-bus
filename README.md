@@ -9,6 +9,10 @@ A simple `Python 3.5+` event bus.
 A way to trigger multiple subsequent functions.
 
 
+# Installation
+`pip3 install event-bus`
+
+
 # Usage
 The EventBus is meant to be a singleton used throughout an application.
 
