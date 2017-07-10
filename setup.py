@@ -8,5 +8,6 @@ setup(
 	license='MIT',
 	author='Sean Parsons',
 	author_email='seanpatrick2013@gmail.com',
-	description='A simple python event bus.'
+	description='A simple python event bus.',
+	download_url='https://github.com/seanpar203/event-bus/archive/1.0.0.tar.gz',
 )
