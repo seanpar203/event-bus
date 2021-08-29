@@ -25,6 +25,7 @@ def test_suscribed_event_was_removed():
 
     assert before_count == 1
     assert after_count == 0
+    bus.add_event(event=EVENT_NAME, func=event_one)
 
 
 def test_removing_event_that_doest_exist():
