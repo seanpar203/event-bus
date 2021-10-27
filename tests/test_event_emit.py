@@ -18,6 +18,7 @@ def subscription():
 def test_event_emit():
     """ Tests that a function subscribed to an event executes on emit. """
 
+    global GLOBAL_VAR
     # Before Emit
     assert GLOBAL_VAR == 'Init'
 
@@ -25,3 +26,4 @@ def test_event_emit():
 
     # After Emit
     assert GLOBAL_VAR == 'Finished'
+    GLOBAL_VAR = 'Init'
