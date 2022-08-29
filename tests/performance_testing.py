@@ -65,6 +65,9 @@ events = [Thread(target=func, args=[30]) for func in bus._events[EVENT_ONE]]
 for func in events:
     func.start()
 
+for func in events:
+    func.join()
+
 finish = timer() - start
 print("{} ran the code in {} seconds.".format(TEST_TYPE, finish))
 
@@ -78,6 +81,9 @@ start = timer()
 events = [Process(target=func, args=[30]) for func in bus._events[EVENT_ONE]]
 for func in events:
     func.start()
+
+for func in events:
+    func.join()
 
 finish = timer() - start
 print("{} ran the code in {} seconds.".format(TEST_TYPE, finish))
@@ -127,6 +133,9 @@ events = [Thread(target=func) for func in bus._events[EVENT_TWO]]
 for func in events:
     func.start()
 
+for func in events:
+    func.join()
+
 finish = timer() - start
 print("{} ran the code in {} seconds.".format(TEST_TYPE, finish))
 
@@ -140,6 +149,9 @@ start = timer()
 events = [Process(target=func) for func in bus._events[EVENT_TWO]]
 for func in events:
     func.start()
+
+for func in events:
+    func.join()
 
 finish = timer() - start
 print("{} ran the code in {} seconds.".format(TEST_TYPE, finish))
@@ -189,6 +201,9 @@ events = [Thread(target=func) for func in bus._events[EVENT_THREE]]
 for func in events:
     func.start()
 
+for func in events:
+    func.join()
+
 finish = timer() - start
 print("{} ran the code in {} seconds.".format(TEST_TYPE, finish))
 
@@ -202,6 +217,9 @@ start = timer()
 events = [Process(target=func) for func in bus._events[EVENT_THREE]]
 for func in events:
     func.start()
+
+for func in events:
+    func.join()
 
 finish = timer() - start
 
